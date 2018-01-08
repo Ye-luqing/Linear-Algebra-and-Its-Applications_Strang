@@ -1,0 +1,1023 @@
+%=======================02-713 LaTeX template, following the 15-210 template==================
+%
+% You don't need to use LaTeX or this template, but you must turn your homework in as
+% a typeset PDF somehow.
+%
+% How to use:
+%    1. Update your information in section "A" below
+%    2. Write your answers in section "B" below. Precede answers for all 
+%       parts of a question with the command "\question{n}{desc}" where n is
+%       the question number and "desc" is a short, one-line description of 
+%       the problem. There is no need to restate the problem.
+%    3. If a question has multiple parts, precede the answer to part x with the
+%       command "\part{x}".
+%    4. If a problem asks you to design an algorithm, use the commands
+%       \algorithm, \correctness, \runtime to precede your discussion of the 
+%       description of the algorithm, its correctness, and its running time, respectively.
+%    5. You can include graphics by using the command \includegraphics{FILENAME}
+%
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\setlength{\headheight}{13.6pt}
+\newcommand\question[2]{\vspace{.25in}\hrule\textbf{#1: #2}\vspace{.5em}\hrule\vspace{.10in}}
+\renewcommand\part[1]{\vspace{.10in}\textbf{(#1)}}
+\newcommand\solution{\vspace{.10in}\textbf{Solution: }}
+\newcommand\correctness{\vspace{.10in}\textbf{Correctness: }}
+\newcommand\runtime{\vspace{.10in}\textbf{Running time: }}
+\pagestyle{fancyplain}
+\lhead{\textbf{\TITLE}}
+\rhead{\today}
+\begin{document}\raggedright
+\newcommand\TITLE{Linear Algebra and Its Applications:Solutions to Problem Set 4.2} 
+
+
+\question{1}{If a $4$ by $4$ matrix has $\det A=\frac{1}{2}$,find
+  $\det (2A)$,$\det (-A)$,$\det A^2$,and $\det (A^{-1})$.} 
+\solution 
+\begin{itemize}
+\item $\det (2A)=2^4\det A=8$.
+\item $\det (-A)=(-1)^4\det A=\frac{1}{2}$.
+\item $\det A^2=\det A\cdot \det A=\frac{1}{4}$.
+\item $\det (A^{-1})=\frac{1}{\det A}=2$.
+\end{itemize}
+\question{2}{If a $3$ by $3$ matrix has $\det A=-1$,find $\det
+  (\frac{1}{2}A)$,$\det (-A)$,$\det (A^2)$,and $\det (A^{-1})$.}
+\solution
+\begin{itemize}
+\item $\det (\frac{1}{2}A)=(\frac{1}{2})^3\det A=-\frac{1}{8}$.
+\item $\det (-A)=(-1)^3\det A=1$.
+\item $\det (A^2)=\det A\cdot \det A=1$.
+\item $\det (A^{-1})=\frac{1}{\det A}=-1$.
+\end{itemize}
+\question{3}{\textit{Row exchange}:Add row $1$ to row $2$,then
+  subtract row $2$ from row $1$.Then add row $1$ to row $2$ and
+  multiply row $1$ by $-1$ to reach $B$.Which rules show the
+  following?
+$$
+\det B=
+\begin{vmatrix}
+  c&d\\
+  a&b
+\end{vmatrix}\mbox{equals}-\det A=-
+\begin{vmatrix}
+  a&b\\
+  c&d
+\end{vmatrix}.
+$$
+Those rules could replace Rule $2$ in the definition of the determinant.
+}
+\solution Let $A=
+\begin{pmatrix}
+  a&b\\
+  c&d
+\end{pmatrix}.
+$Then,the operation flow mentioned in the exercise can be represented
+as below:
+$$
+A=\begin{pmatrix}
+  a&b\\
+  c&d
+\end{pmatrix}\to
+\begin{pmatrix}
+  a&b\\
+ a+c&b+d
+\end{pmatrix}\to
+\begin{pmatrix}
+  -c&-d\\
+  a+c&b+d
+\end{pmatrix}\to
+\begin{pmatrix}
+  -c&-d\\
+  a&b
+\end{pmatrix}\to
+\begin{pmatrix}
+  c&d\\
+  a&b
+\end{pmatrix}=B.
+$$
+Rule 5:Subtracting a multiple of one row from another row leaves the
+same determinant.Rule 5 can replace Rule 2.
+\question{4}{By applying row operations to produce an upper triangular
+$U$,compute
+$$
+\det
+\begin{bmatrix}
+  1&2&-2&0\\
+  2&3&-4&1\\
+  -1&-2&0&2\\
+  0&2&5&3
+\end{bmatrix}\mbox{and} ~\det
+\begin{bmatrix}
+  2&-1&0&0\\
+ -1&2&-1&0\\
+0&-1&2&-1\\
+0&0&-1&-2
+\end{bmatrix}.
+$$
+Exchange rows $3$ and $4$ of the second matrix and recompute the
+pivots and determinant.
+}
+\solution
+\begin{itemize}
+\item Let $A=\begin{bmatrix}
+  1&2&-2&0\\
+  2&3&-4&1\\
+  -1&-2&0&2\\
+  0&2&5&3
+\end{bmatrix}$.Then we perform row operations to matrix $A$:
+\begin{align*}
+A=\begin{bmatrix}
+  1&2&-2&0\\
+  2&3&-4&1\\
+  -1&-2&0&2\\
+  0&2&5&3
+\end{bmatrix}&\xrightarrow{row 2+row 1\times (-2)}
+               \begin{bmatrix}
+                 1&2&-2&0\\
+                0&-1&0&1\\
+               -1&-2&0&2\\
+              0&2&5&3
+               \end{bmatrix}\xrightarrow{row 3+row 1}
+                     \begin{bmatrix}
+                       1&2&-2&0\\
+                      0&-1&0&1\\
+                     0&0&-2&2\\
+                    0&2&5&3
+                     \end{bmatrix}\\&\xrightarrow{row 4+row 2\times 2}
+                           \begin{bmatrix}
+                             1&2&-2&0\\
+0&-1&0&1\\
+0&0&-2&2\\
+0&0&5&5
+                           \end{bmatrix}\xrightarrow{row 4+row 3\times
+       \frac{5}{2}}
+       \begin{bmatrix}
+         1&2&-2&0\\
+0&-1&0&1\\
+0&0&-2&2\\
+0&0&0&10
+       \end{bmatrix}=U.
+\end{align*}
+So $\det A=\det U=20$.
+\item Let $B=\begin{bmatrix}
+  2&-1&0&0\\
+ -1&2&-1&0\\
+0&-1&2&-1\\
+0&0&-1&-2
+\end{bmatrix}.$Then we perform row operations to matrix $B$:
+\begin{align*}
+  B=\begin{bmatrix}
+  2&-1&0&0\\
+ -1&2&-1&0\\
+0&-1&2&-1\\
+0&0&-1&-2
+\end{bmatrix}&\xrightarrow{row 2+row 1\times \frac{1}{2}}
+               \begin{bmatrix}
+                 2&-1&0&0\\
+0&\frac{3}{2}&-1&0\\
+0&-1&2&-1\\
+0&0&-1&-2
+               \end{bmatrix}\xrightarrow{row 3+row 2\times \frac{2}{3}}
+        \begin{bmatrix}
+          2&-1&0&0\\
+          0&\frac{3}{2}&-1&0\\
+0&0&\frac{4}{3}&-1\\
+0&0&-1&-2
+        \end{bmatrix}\\&\xrightarrow{row 4+row 3\times \frac{3}{4}}
+        \begin{bmatrix}
+          2&-1&0&0\\
+0&\frac{3}{2}&-1&0\\
+0&0&\frac{4}{3}&-1\\
+0&0&0&-\frac{11}{4}
+        \end{bmatrix}=U.
+\end{align*}
+So $\det B=\det U=-11$.\\
+
+When row $3$ and $4$ of the second matrix are changed,the matrix $B$
+turned into the matrix $B'=
+\begin{bmatrix}
+  2&-1&0&0\\
+  -1&2&-1&0\\
+  0&0&-1&-2\\
+ 0&-1&2&-1
+\end{bmatrix}
+$.Perform row operations to the matrix $B'$,we get matrix $U'=
+\begin{bmatrix}
+  2&-1&0&0\\
+0&\frac{3}{2}&-1&0\\
+0&0&-1&-2\\
+0&0&0&-\frac{11}{3}
+\end{bmatrix}
+$.So $\det B'=\det U'=11$.
+\end{itemize}
+\question{5}{Count row exchanges to find these determinants:
+$$
+\det
+\begin{bmatrix}
+  0&0&0&1\\
+  0&0&1&0\\
+  0&1&0&0\\
+  1&0&0&0
+\end{bmatrix}=\pm 1~\mbox{and}~\det
+\begin{bmatrix}
+  0&1&0&0\\
+0&0&1&0\\
+0&0&0&1\\
+1&0&0&0
+\end{bmatrix}=-1.
+$$
+}
+\solution Exchange row 1 and 4,then row 2 and 3 of the first matrix,we get an identity matrix.So
+the determinant of the first matrix is $1$.\\
+
+Exchange row 1 and 4,then row 3 and 4,then row 2 and row 3
+of the second matrix,we get an identity matrix.So the determinant of
+the second matrix is $-1$.
+\question{6}{For each $n$,how many exchanges will put (row $n$,row
+  $n-1$,$\cdots$,row $1$) into the normal order (row $1$,$\cdots$,row
+  $n-1$,row $n$)?Find $\det P$ for the $n$ by $n$ permutation with
+  $1$s on the reverse diagonal.Problem $5$ had $n=4$.}
+\solution $(n-1)+(n-2)+\cdots+1=\frac{n(n-1)}{2}$.Putting (row $n$,row
+  $n-1$,$\cdots$,row $1$) into the normal order (row $1$,$\cdots$,row
+  $n-1$,row $n$) requires $\frac{n(n-1)}{2}$ row exchanges.$\det
+  P=(-1)^{\frac{n(n-1)}{2}}$.
+\question{7}{Find the determinants of 
+\begin{itemize}
+\item a rank one matrix
+$$
+A=
+\begin{bmatrix}
+  1\\
+4\\
+2
+\end{bmatrix}
+\begin{bmatrix}
+  2&-1&2
+\end{bmatrix}.
+$$
+\item the upper triangular matrix
+$$
+U=
+\begin{bmatrix}
+  4&4&8&8\\
+0&1&2&2\\
+0&0&2&6\\
+0&0&0&2
+\end{bmatrix}.
+$$
+\item the lower triangular matrix $U^T$.
+\item the inverse matrix $U^{-1}$.
+\item the "reverse-triangular" matrix that results from row exchanges,
+$$
+M=
+\begin{bmatrix}
+  0&0&0&2\\
+0&0&2&6\\
+0&1&2&2\\
+4&4&8&8
+\end{bmatrix}.
+$$
+\end{itemize}
+}
+\solution
+\begin{itemize}
+\item $\det A=0$.
+\item $\det U=16$.
+\item $\det U^T=16$.
+\item $\det U^{-1}=\frac{1}{16}$.
+\item $\det M=(-1)^2\det U=\det U=16$.
+\end{itemize}
+\question{8}{Show  how rule $6$($\det=0$ if a row is zero) comes directly from rules $2$ and
+  $3$.}
+\solution $
+\begin{vmatrix}
+  0&0\\
+  c&d
+\end{vmatrix}=
+\begin{vmatrix}
+  c-c&d-d\\
+  c&d
+\end{vmatrix}=
+\begin{vmatrix}
+  c&d\\
+  c&d
+\end{vmatrix}+
+\begin{vmatrix}
+  -c&-d\\
+  c&d
+\end{vmatrix}=
+\begin{vmatrix}
+  c&d\\
+  c&d
+\end{vmatrix}-
+\begin{vmatrix}
+  c&d\\
+c&d
+\end{vmatrix}=0.
+$
+\question{9}{Suppose you do two row operations at once,going from 
+$$
+\begin{bmatrix}
+  a&b\\
+  c&d
+\end{bmatrix}~\mbox{to}~
+\begin{bmatrix}
+  a-mc&b-md\\
+  c-la&d-lb
+\end{bmatrix}.
+$$
+Find the determinant of the new matrix,by rule 3 or by direct calculation.
+}
+\solution \begin{align*}
+\begin{vmatrix}
+  a-mc&b-md\\
+  c-la&d-lb
+\end{vmatrix}&=
+\begin{vmatrix}
+  a&b\\
+ c-la&d-lb
+\end{vmatrix}-
+\begin{vmatrix}
+  mc&md\\
+  c-la&d-lb
+\end{vmatrix}\\&=
+\begin{vmatrix}
+  c-la&d-lb\\
+  mc&md
+\end{vmatrix}-
+\begin{vmatrix}
+  c-la&d-lb\\
+ a&b
+\end{vmatrix}\\&=\left(
+                 \begin{vmatrix}
+                   c&d\\
+mc&md
+                 \end{vmatrix}-
+    \begin{vmatrix}
+      la&lb\\
+mc&md
+    \end{vmatrix}
+\right)-\left(
+    \begin{vmatrix}
+      c&d\\
+     a&b
+    \end{vmatrix}-
+        \begin{vmatrix}
+          la&lb\\
+           a&b
+        \end{vmatrix}
+\right)
+\\&=-
+    \begin{vmatrix}
+      la&lb\\
+      mc&md
+    \end{vmatrix}-
+          \begin{vmatrix}
+            c&d\\
+           a&b
+          \end{vmatrix}
+\\&=-ml\left(
+    \begin{vmatrix}
+      a&b\\
+     c&d
+    \end{vmatrix}\right)+
+        \begin{vmatrix}
+          a&b\\
+c&d
+        \end{vmatrix}
+\\&=(1-ml)(ad-bc).
+\end{align*}
+\question{10}{If $Q$ is an orthogonal matrix,so that $Q^TQ=I$,prove
+  that $\det Q$ equals $+1$ or $-1$.What kind of box is formed from
+  the rows(or columns)of $Q$?}
+\solution $\det Q^TQ=\det Q\det Q=\det I=1$,so $\det Q=\pm 1$.The rows
+or columns of $Q$ form a  $n$ dimensional unit cube,in which $n$ is
+the rank of $Q$.
+\question{11}{Prove again that $\det Q=1$ or $-1$ using only the
+  Product rule.If $|\det Q|>1$ then $\det Q^n$ blows up.How do you
+  know this can't happen to $Q^n$?}
+\solution Because $Q^n$ is still an orthogonal matrix.Its determinant
+can't blow up because the rows of $Q^n$ form an $n$ dimensional unit
+cube.
+\question{12}{Use row operations to verify that the $3$ by $3$
+  "Vandermonde determinant" is
+$$
+\det
+\begin{bmatrix}
+  1&a&a^2\\
+  1&b&b^2\\
+  1&c&c^2
+\end{bmatrix}=(b-a)(c-a)(c-b).
+$$
+}
+\solution When either two of $a,b,c$ are equal,both the determinant
+and $(b-a)(c-a)(c-b)$ are zero.So in this case the identity holds.When
+neither two of $a,b,c$ are equal,
+\begin{align*}
+  \det
+  \begin{bmatrix}
+    1&a&a^2\\
+    1&b&b^2\\
+    1&c&c^2
+  \end{bmatrix}&=
+                 \det\begin{bmatrix}
+                   1&a&a^2\\
+                   0&b-a&b^2-a^2\\
+                   0&c-a&c^2-a^2
+                 \end{bmatrix}=
+                         \det\begin{bmatrix}
+                            1&a&a^2\\
+0&b-a&b^2-a^2\\
+0&0&(c^2-a^2)-\frac{b^2-a^2}{b-a}(c-a)
+                          \end{bmatrix}
+\\&=\det
+    \begin{bmatrix}
+      1&a&a^2\\
+      0&b-a&b^2-a^2\\
+      0&0&(c-a)(c-b)
+    \end{bmatrix}.
+\end{align*}
+So $\det
+\begin{bmatrix}
+  1&a&a^2\\
+1&b&b^2\\
+1&c&c^2
+\end{bmatrix}=(b-a)(c-a)(c-b).
+$
+\question{13}{
+  \begin{itemize}
+  \item A skew-symmetric matrix satisfies $K^T=-K$,as in 
+$$
+K=
+\begin{bmatrix}
+  0&a&b\\
+-a&0&c\\
+-b&-c&0
+\end{bmatrix}.
+$$
+In the $3$ by $3$ case,why is $\det (-K)=(-1)^3\det K$?On the other
+hand $\det K^T=\det K$(always).Deduce that the determinant must be
+zero.
+\item Write down a $4$ by $4$ skew-symmetric matrix with $\det K$ not zero.
+  \end{itemize}
+}
+\solution
+\begin{itemize}
+\item $\det (-K)=(-1)^3\det K=-\det K$.$\det (-K)=\det K^T=\det K$.So
+  $\det K=-\det K$,so $\det K=0$.
+\item $
+  \det\begin{bmatrix}
+    0&0&0&1\\
+    0&0&1&0\\
+0&-1&0&0\\
+-1&0&0&0
+  \end{bmatrix}\neq 0.
+$
+\end{itemize}
+\question{14}{True or false,with reason if true and counterexample if
+  false:
+  \begin{itemize}
+  \item If $A$ and $B$ are identical except that $b_{11}=2a_{11}$,then
+    $\det B=2\det A$.
+\item The determinant is the product of the pivots.
+\item If $A$ is invertible and $B$ is singular,then $A+B$ is
+  invertible.
+\item If $A$ is invertible and $B$ is singular,then $AB$ is singular.
+\item The determinant of $AB-BA$ is zero.
+  \end{itemize}
+}
+\solution
+\begin{itemize}
+\item False.Counterexample:$
+\det  \begin{pmatrix}
+    1&1\\
+1&1
+  \end{pmatrix}=0,
+\det  \begin{pmatrix}
+    2&1\\
+1&1
+  \end{pmatrix}=1.
+$
+\item True.
+\item False.Counterexample:$A=
+  \begin{bmatrix}
+    1&0\\
+    0&1
+  \end{bmatrix},b=
+  \begin{bmatrix}
+    -1&0\\
+     0&0
+  \end{bmatrix}.
+$
+\item True.
+\item False.$$ A=
+  \begin{bmatrix}
+    1&2\\
+    -1&2
+  \end{bmatrix},B=
+  \begin{bmatrix}
+    1&3\\
+0&-1
+  \end{bmatrix},
+$$then $\det (AB-BA)=\det
+\begin{bmatrix}
+  3&-7\\
+-2&-3
+\end{bmatrix}\neq 0.
+$
+\end{itemize}
+\question{15}{If every row of $A$ adds to zero,prove that $\det
+  A=0$.If every row adds to $1$,prove that $\det (A-I)=0$.Show by
+  example that this does not imply $\det A=I$.}
+\solution When every row of $A$ adds to zero,then $A$ is singular,so
+$\det A=0$.\\
+When every row of $A$ adds to one,then every row of $A-I$ adds to
+zero,so $\det (A-I)=0$.\\
+
+$\det (A-I)=0$ does not imply that $\det A=1$.For example,$A=
+\begin{bmatrix}
+  1&2\\
+  0&2
+\end{bmatrix}.
+$
+\question{16}{Find these $4$ by $4$ determinants by Gaussian
+  elimination:}
+$$
+\det
+\begin{bmatrix}
+  11&12&13&14\\
+  21&22&23&24\\
+  31&32&33&34\\
+  41&42&43&44
+\end{bmatrix}~\mbox{and}~\det
+\begin{bmatrix}
+  1&t&t^2&t^3\\
+  t&1&t&t^2\\
+  t^2&t&1&t\\
+  t^3&t^2&t&1
+\end{bmatrix}.
+$$
+\solution 
+$$
+  \det
+  \begin{bmatrix}
+    11&12&13&14\\
+    21&22&23&24\\
+    31&32&33&34\\
+    41&42&43&44
+  \end{bmatrix}=\det
+                 \begin{bmatrix}
+                   11&12&13&14\\
+-1&-2&-3&-4\\
+-2&-4&-6&-8\\
+-3&-6&-9&-12
+                 \end{bmatrix}=0.
+$$
+\begin{align*}
+\det
+\begin{bmatrix}
+  1&t&t^2&t^3\\
+  t&1&t&t^2\\
+t^2&t&1&t\\
+t^3&t^2&t&1
+\end{bmatrix}&=\det
+\begin{bmatrix}
+  1&t&t^2&t^3\\
+  0&1-t^2&t-t^3&t^2-t^4\\
+  0&t-t^3&1-t^4&t-t^5\\
+  0&t^2-t^4&t-t^5&1-t^6
+\end{bmatrix}
+\\&=\det
+    \begin{bmatrix}
+      1&t&t^2&t^3\\
+      0&1-t^2&1-t^3&t^2-t^4\\
+      0&0&1-t^2&t-t^{3}\\
+      0&0&t-t^{3}&1-t^4
+    \end{bmatrix}
+\\&=\det
+    \begin{bmatrix}
+      1&t&t^2&t^3\\
+0&1-t^2&1-t^3&t^2-t^4\\
+0&0&1-t^2&t-t^3\\
+0&0&0&1-t^2
+    \end{bmatrix}
+\\&=(1-t^2)^3.
+\end{align*}
+\question{17}{Find the determinant of 
+$$
+A=
+\begin{bmatrix}
+  4&2\\
+1&3
+\end{bmatrix},A^{-1}=\frac{1}{10}
+\begin{bmatrix}
+  3&-2\\
+-1&4
+\end{bmatrix},A-\lambda I=
+\begin{bmatrix}
+  4-\lambda&2\\
+1&3-\lambda
+\end{bmatrix}.
+$$
+For which value of $\lambda$ is $A-\lambda I$ a singular matrix?
+}
+\solution $\det A=\det
+\begin{bmatrix}
+  4&2\\
+1&3
+\end{bmatrix}=\det
+\begin{bmatrix}
+  4&2\\
+0&\frac{5}{2}
+\end{bmatrix}=10
+$.$\det A^{-1}=\frac{1}{\det A}=\frac{1}{10}$.When $\det (A-\lambda
+I)=0$,
+$$
+\det (A-\lambda I)=\det
+\begin{bmatrix}
+  4-\lambda&2\\
+1&3-\lambda
+\end{bmatrix}=-\det
+\begin{bmatrix}
+  1&3-\lambda\\
+4-\lambda&2
+\end{bmatrix}=-\det
+\begin{bmatrix}
+  1&3-\lambda\\
+ 0&2-(3-\lambda)(4-\lambda)
+\end{bmatrix}=(3-\lambda)(4-\lambda)-2=0,
+$$
+so $\lambda=2$or $5$.
+\question{18}{Evaluate $\det A$ by reducing the matrix to triangular
+  form (rules $5$ and $7$).
+$$
+A=
+\begin{bmatrix}
+  1&1&3\\
+0&4&6\\
+1&5&8
+\end{bmatrix},B=
+\begin{bmatrix}
+  1&1&3\\
+0&4&6\\
+0&0&1
+\end{bmatrix},C=
+\begin{bmatrix}
+  1&1&3\\
+0&4&6\\
+1&5&9
+\end{bmatrix}.
+$$
+What are the determinants of $B,C,AB,A^TA,$and $C^T$?
+}
+\solution 
+$$
+\det A=\det
+\begin{bmatrix}
+  1&1&3\\
+  0&4&6\\
+  0&4&5
+\end{bmatrix}=\det
+\begin{bmatrix}
+  1&1&3\\
+0&4&6\\
+0&0&1
+\end{bmatrix}=4.
+$$
+$\det B=4$.$\det C^T=\det C=\det
+\begin{bmatrix}
+  1&1&3\\
+  0&4&6\\
+  0&4&6
+\end{bmatrix}=0.
+$
+\question{19}{Suppose that $CD=-DC$,and find the flaw in the following
+argument:Taking determinant gives $(\det C)(\det D)=-(\det D)(\det
+C)$,so either $\det C=0$ or $\det D=0$.Thus $CD=-DC$ is only possible
+if $C$ or $D$ is singular.}
+\solution $\det -DC= -(\det D)(\det C)$ is generally false.
+\question{20}{Do these matrices have determinant $0,1,2,$or $3$?
+$$
+A=
+\begin{bmatrix}
+  0&0&1\\
+1&0&0\\
+0&1&0
+\end{bmatrix},B=
+\begin{bmatrix}
+  0&1&1\\
+1&0&1\\
+1&1&0
+\end{bmatrix},C=
+\begin{bmatrix}
+  1&1&1\\
+1&1&1\\
+1&1&1
+\end{bmatrix}.
+$$
+}
+\solution $\det A=1$.$\det B=2$.$\det C=0$.
+\question{21}{The inverse of a $2$ by $2$ matrix seems to have
+  determinant $=1$:
+$$
+\det A^{-1}=\det \frac{1}{ad-bc}
+\begin{bmatrix}
+  d&-b\\
+-c&a
+\end{bmatrix}=\frac{ad-bc}{ad-bc}=1.
+$$
+What is wrong with this calculation?What is the correct $\det A^{-1}$?
+}
+\solution $\det A^{-1}=\frac{1}{ad-bc}$.
+\question{22}{Reduce $A$ to $U$ and find $\det A=$ product of the
+  pivots:
+$$
+A=
+\begin{bmatrix}
+  1&1&1\\
+1&2&2\\
+1&2&3
+\end{bmatrix}~\mbox{and}~A=
+\begin{bmatrix}
+  1&2&3\\
+2&2&3\\
+3&3&3
+\end{bmatrix}.
+$$
+}
+\solution
+\begin{itemize}
+\item $\det A=\det
+  \begin{bmatrix}
+    1&1&1\\
+   0&1&1\\
+0&1&2
+  \end{bmatrix}=\det
+  \begin{bmatrix}
+    1&1&1\\
+    0&1&1\\
+    0&0&1
+  \end{bmatrix}=1.
+$
+\item $\det A=\det
+  \begin{bmatrix}
+    1&2&3\\
+0&-2&-3\\
+0&-3&-6
+  \end{bmatrix}=\det
+  \begin{bmatrix}
+    1&2&3\\
+    0&-2&-3\\
+    0&0&-\frac{3}{2}
+  \end{bmatrix}=3.
+$
+\end{itemize}
+\question{23}{By applying row operations to produce an upper
+  triangular $U$,compute
+$$
+\det
+\begin{bmatrix}
+  1&2&3&0\\
+2&6&6&1\\
+-1&0&0&3\\
+0&2&0&7
+\end{bmatrix}~\mbox{and}~\det
+\begin{bmatrix}
+  2&1&1&1\\
+1&2&1&1\\
+1&1&2&1\\
+1&1&1&2
+\end{bmatrix}.
+$$
+}
+\solution 
+$$
+\det
+\begin{bmatrix}
+  1&2&3&0\\
+  2&6&6&1\\
+  -1&0&0&3\\
+  0&2&0&7
+\end{bmatrix}=\det
+\begin{bmatrix}
+  1&2&3&0\\
+  0&2&0&1\\
+  0&2&3&3\\
+  0&2&0&7
+\end{bmatrix}=\det
+\begin{bmatrix}
+  1&2&3&0\\
+  0&2&0&1\\
+  0&0&3&2\\
+  0&0&0&6
+\end{bmatrix}=36.
+$$
+$$
+\det
+\begin{bmatrix}
+  1&t&t^2\\
+  t&1&t\\
+  t^2&t&1
+\end{bmatrix}=\det
+\begin{bmatrix}
+  1&t&t^2\\
+  0&1-t^2&t-t^3\\
+  0&t-t^3&1-t^4
+\end{bmatrix}=
+\begin{bmatrix}
+  1&t&t^2\\
+  0&1-t^2&t-t^{3}\\
+  0&0&1-t^2
+\end{bmatrix}=(1-t^2)^2.
+$$
+\question{25}{Elimination reduces $A$ to $U$.Then $A=LU$:
+$$
+A=
+\begin{bmatrix}
+  3&3&4\\
+  6&8&7\\
+  -3&5&-9
+\end{bmatrix}=
+\begin{bmatrix}
+  1&0&0\\
+  2&1&0\\
+  -1&4&1
+\end{bmatrix}
+\begin{bmatrix}
+  3&3&4\\
+  0&2&-1\\
+  0&0&-1
+\end{bmatrix}=LU.
+$$
+Find the determinant of $L,U,A,U^{-1}L^{-1}$,and $U^{-1}L^{-1}A$.
+}
+\solution $\det L=1$,$\det U=-6$,$\det A=\det L\det U=-6$.$\det
+U^{-1}L^{-1}=\det U^{-1}\det L^{-1}=-\frac{1}{6}$.$\det
+U^{-1}L^{-1}A=\det I=1$.
+\question{26}{If $a_{ij}$ is $i$ times $j$,show that $\det
+  A=0$.(Exception when $A=[1]$.)}
+\solution Every two rows of $A$ are linearly dependent,so $\det A=0$.
+\question{27}{If $a_{ij}$ is $i+j$,show that $\det A=0$.(Exception
+  when $n=1$ or $2$).}
+\solution Let the second row of $A$ subtract the first row of $A$,we
+get a matrix $A'$ in which all the element of the second row are
+$2$.Let the third row of $A'$ subtract the second row of $A'$,we get a
+matrix $A''$ in which all the element of the third row are $3$.The
+second and the third row of $A''$ are linearly dependent,so $\det
+A=\det A'=\det A''=0$.
+\question{28}{Compute the determinant of these matrices by row
+  operations:
+$$
+A=
+\begin{bmatrix}
+  0&a&0\\
+0&0&b\\
+c&0&0
+\end{bmatrix},B=
+\begin{bmatrix}
+  0&a&0&0\\
+  0&0&b&0\\
+  0&0&0&c\\
+  d&0&0&0
+\end{bmatrix},~\mbox{and}~C=
+\begin{bmatrix}
+  a&a&a\\
+  a&b&b\\
+  a&b&c
+\end{bmatrix}.
+$$
+}
+\solution $\det A=abc$.$\det B=-abcd$.
+$$
+\det C=\det
+\begin{bmatrix}
+  a&a&a\\
+  0&b-a&b-a\\
+  0&b-a&c-a
+\end{bmatrix}=\det
+\begin{bmatrix}
+  a&a&a\\
+  0&b-a&b-a\\
+  0&0&c-b
+\end{bmatrix}=a(b-a)(c-b).
+$$
+\question{29}{What is wrong with this proof that projection matrices
+  have $\det P=1$?
+$$
+P=A(A^TA)^{-1}A^T~\mbox{so}~|P|=|A|\frac{1}{|A^T||A|}|A^T|=1.
+$$
+}
+\solution $A^TA$ is not necessarily nonsingular.
+\question{30}{Show that the partial derivatives of $\ln (\det A)$ give
+$A^{-1}$:
+$$f(a,b,c,d)=\ln (ad-bc)~\mbox{leads to }~
+\begin{bmatrix}
+  \frac{\partial f}{\partial a}&\frac{\partial f}{\partial c}\\
+  \frac{\partial f}{\partial b}&\frac{\partial f}{\partial d}
+\end{bmatrix}=A^{-1}.
+$$
+}
+\solution 
+$$
+\begin{bmatrix}
+  \frac{\partial f}{\partial a}&\frac{\partial f}{\partial c}\\
+  \frac{\partial f}{\partial b}&\frac{\partial f}{\partial d}
+\end{bmatrix}=
+\begin{bmatrix}
+  \frac{d}{ad-bc}&\frac{-b}{ad-bc}\\
+  \frac{-c}{ad-bc}&\frac{a}{ad-bc}
+\end{bmatrix}=A^{-1}.
+$$
+\question{31-33}{Omitted.}
+\question{34}{If you know that $\det A=6$,what is the determinant of
+  $B$?
+$$
+\det A=
+\begin{vmatrix}
+  \mbox{row}1\\
+\mbox{row}2\\
+\mbox{row}3
+\end{vmatrix}=6,\det B=
+\begin{vmatrix}
+  \mbox{row}1+\mbox{row}2\\
+  \mbox{row}2+\mbox{row}3\\
+  \mbox{row}3+\mbox{row}1
+\end{vmatrix}=
+$$
+}
+\solution $\det B=0$.
+\question{35}{Suppose the $4$ by $4$ matrix $M$ has four equal rows
+  all containing $a,b,c,d$.We know that $\det (M)=0$.The problem is to
+find $\det (I+M)$ by any method:
+$$
+\det (I+M)=
+\begin{vmatrix}
+  1+a&b&c&d\\
+  a&1+b&c&d\\
+  a&b&1+c&d\\
+  a&b&c&1+d
+\end{vmatrix}.
+$$
+}
+\solution 
+\begin{align*}
+  \det (I+M)&=\det
+  \begin{bmatrix}
+    1+a&b&c&d\\
+    -1&1&0&0\\
+    -1&0&1&0\\
+    -1&0&0&1
+  \end{bmatrix}=\det
+            \begin{bmatrix}
+              a&b+1&c&d\\
+             -1&1&0&0\\
+             -1&0&1&0\\
+             -1&0&0&1
+            \end{bmatrix}
+\\&=-\det
+    \begin{bmatrix}
+      -1&1&0&0\\
+      a&b+1&c&d\\
+      -1&0&1&0\\
+      -1&0&0&1
+    \end{bmatrix}=-\det
+              \begin{bmatrix}
+                -1&1&0&0\\
+                0&a+b+1&c&d\\
+                0&-1&1&0\\
+0&-1&0&1
+              \end{bmatrix}
+\\&=\det
+    \begin{bmatrix}
+      -1&1&0&0\\
+      0&-1&1&0\\
+      0&a+b+1&c&d\\
+     0&-1&0&1
+    \end{bmatrix}=\det
+             \begin{bmatrix}
+               -1&1&0&0\\
+               0&-1&1&0\\
+               0&0&a+b+c+1&d\\
+               0&0&-1&1
+             \end{bmatrix}
+\\&=-\det
+    \begin{bmatrix}
+      -1&1&0&0\\
+     0&-1&1&0\\
+     0&0&-1&1\\
+     0&0&a+b+c+1&d
+    \end{bmatrix}=-\det
+                  \begin{bmatrix}
+                    -1&1&0&0\\
+0&-1&1&0\\
+0&0&-1&1\\
+0&0&0&a+b+c+d+1
+                  \end{bmatrix}\\
+&=a+b+c+d+1.
+\end{align*}
+\end{document}
